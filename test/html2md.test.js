@@ -1,6 +1,17 @@
 import { test } from 'node:test';
 import assert from 'node:assert';
 import html2md from '../lib/index.js';
+import { execSync } from 'node:child_process';
+
+test('CLI produces identical output to the library (no drift)', () => {
+  const html = '<h1>Drift check</h1><p>Some <a href="https://example.com">link</a>.</p>';
+  const expected = html2md(html).trim();
+  const cliOut = execSync(
+    `printf '%s' '${html.replace(/'/g, "\\'")}' | node ${new URL('../bin/html2md.js', import.meta.url).pathname}`,
+    { encoding: 'utf8' },
+  ).trim();
+  assert.strictEqual(cliOut, expected);
+});
 
 test('converts basic headings, paragraphs and links', () => {
   const md = html2md('<h1>Title</h1><p>Hello <a href="https://example.com">world</a></p>');

@@ -1,6 +1,6 @@
 {
   "name": "@salvianus/html2md",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "description": "A thin, opinionated CLI and library for converting HTML to Markdown — built on turndown",
   "type": "module",
   "main": "lib/index.js",

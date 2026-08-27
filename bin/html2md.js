@@ -4,28 +4,15 @@
  *
  * Reads HTML from stdin, writes Markdown to stdout.
  *
- * Built on turndown (https://github.com/mixmark-io/turndown), with
- * noise-stripping defaults tuned for consuming web pages with language
- * models: script/style/noscript/svg/iframe content is removed rather
- * than dumped into the output.
+ * A thin wrapper around the library in lib/index.js — all conversion
+ * logic lives there so the CLI and programmatic interfaces cannot drift.
  *
  * Usage:
  *   curl -s https://example.com | html2md
  *   cat page.html | html2md
  */
 
-import TurndownService from 'turndown';
-
-const turndownService = new TurndownService({
-  headingStyle: 'atx',
-  bulletListMarker: '-',
-  codeBlockStyle: 'fenced',
-});
-
-// Strip elements that produce noise in markdown output.
-// Turndown's default behavior dumps their text content as-is,
-// which floods the output with JS code, CSS rules, and SVG markup.
-turndownService.remove(['script', 'style', 'noscript', 'svg', 'iframe']);
+import html2md from '../lib/index.js';
 
 let stdin = '';
 
@@ -36,14 +23,10 @@ process.stdin.on('data', (chunk) => {
 });
 
 process.stdin.on('end', () => {
-  if (!stdin.trim()) {
-    console.log('--- empty ---');
-    return;
-  }
   try {
-    console.log(turndownService.turndown(stdin));
+    console.log(html2md(stdin));
   } catch (error) {
-    console.error(`html2md: failed to convert HTML to Markdown: ${error.message}`);
+    console.error(`html2md: ${error.message}`);
     process.exit(1);
   }
 });
