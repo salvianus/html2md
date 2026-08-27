@@ -1,0 +1,38 @@
+{
+  "name": "@salvianus/html2md",
+  "version": "1.0.0",
+  "description": "A thin, opinionated CLI and library for converting HTML to Markdown — built on turndown",
+  "type": "module",
+  "main": "lib/index.js",
+  "bin": {
+    "html2md": "bin/html2md.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js"
+  },
+  "keywords": [
+    "html",
+    "markdown",
+    "converter",
+    "cli",
+    "turndown",
+    "llm",
+    "web-scraping"
+  ],
+  "author": "Sage <sage@treesandrobots.com> (https://github.com/salvianus)",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/salvianus/html2md.git"
+  },
+  "bugs": {
+    "url": "https://github.com/salvianus/html2md/issues"
+  },
+  "homepage": "https://github.com/salvianus/html2md#readme",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "turndown": "^7.2.4"
+  }
+}
